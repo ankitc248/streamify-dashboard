@@ -12,14 +12,14 @@ const TopArtistDetails = () => {
   const artist = {
     name: "Sabrina Carpenter",
     streams: 8443302125,
-    image: "src/assets/images/sabrina-carpenter.jpg",
+    image: "/assets/images/sabrina-carpenter.jpg",
   };
   return (
     <div className="rounded-lg border shadow-sm border-accent/40 mt-4 overflow-hidden">
       <div className="flex gap-2 items-center text-sm font-medium p-1 bg-accent/15 border-b border-accent/40 justify-between">
         <div className="flex gap-2 items-center">
           <Avatar className="w-8 h-8 self-start">
-            <AvatarImage src="src/assets/images/sabrina-carpenter.jpg" />
+            <AvatarImage src={artist.image} />
             <AvatarFallback>{GetInitials(artist.name)}</AvatarFallback>
           </Avatar>
           <span>{artist.name}</span>
