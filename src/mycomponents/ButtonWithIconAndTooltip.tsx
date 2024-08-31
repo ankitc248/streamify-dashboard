@@ -10,13 +10,27 @@ import { ReactElement } from "react";
 interface ButtonProps {
   tooltipText: string;
   children: ReactElement;
+  onClick?: () => void;
+  variant?: "ghost" | "link";
 }
-const ButtonWithIconAndTooltip = ({ tooltipText, children }: ButtonProps) => {
+const ButtonWithIconAndTooltip = ({
+  tooltipText,
+  children,
+  onClick,
+  variant = "ghost",
+}: ButtonProps) => {
   return (
     <TooltipProvider delayDuration={0}>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size={"icon"} className="w-8 h-8 group">
+          <Button
+            variant={variant}
+            size={"icon"}
+            className="w-8 h-8 group"
+            onClick={() => {
+              if (onClick) onClick();
+            }}
+          >
             {children}
           </Button>
         </TooltipTrigger>
@@ -28,7 +42,7 @@ const ButtonWithIconAndTooltip = ({ tooltipText, children }: ButtonProps) => {
   );
 };
 
-const TootlipContainer = ({ tooltipText, children }: ButtonProps) => {
+const CustomTooltipContainer = ({ tooltipText, children }: ButtonProps) => {
   return (
     <TooltipProvider delayDuration={0}>
       <Tooltip>
@@ -41,5 +55,5 @@ const TootlipContainer = ({ tooltipText, children }: ButtonProps) => {
   );
 };
 
-export { TootlipContainer };
+export { CustomTooltipContainer };
 export default ButtonWithIconAndTooltip;

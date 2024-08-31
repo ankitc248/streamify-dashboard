@@ -17,7 +17,7 @@ const PrettyNumber = ({
   if (number > 99999999 && precision >= 2) textSize = "text-xl";
   return (
     <p
-      className={`${textSize} font-bold text-neutral-800 text-accent/90 drop-shadow-sm text-ellipsis overflow-hidden w-full`}
+      className={`${textSize} font-bold text-neutral-800 text-accent/90 drop-shadow-sm text-ellipsis overflow-hidden w-full dark:text-neutral-100`}
     >
       {extraBefore}
       <CountUp

@@ -22,15 +22,15 @@ const RevenueBlock = ({
   };
   const [currency, setCurrency] = useState("USD");
   return (
-    <div className="flex gap-4 items-baseline justify-end">
-      <div className="absolute top-0 right-0 p-2">
+    <div className="flex gap-4 items-center justify-between">
+      <div className="">
         <Select
           defaultValue="USD"
           onValueChange={(value) => {
             setCurrency(value);
           }}
         >
-          <SelectTrigger className="w-[72px] text-xs rounded-full p-2 h-6 font-base shadow-sm border-neutral-300">
+          <SelectTrigger className="w-[72px] text-xs rounded-full p-2 h-6 font-base shadow-sm border-neutral-300 dark:text-neutral-100">
             <SelectValue placeholder="CUR" defaultValue="US" />
           </SelectTrigger>
           <SelectContent>

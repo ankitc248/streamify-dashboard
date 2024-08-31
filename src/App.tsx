@@ -1,23 +1,18 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import SideBar from "./mycomponents/SideBar/SideBar";
 import Dashboard from "./mycomponents/Dashboard/Dashboard";
+import { ThemeProvider } from "./mycomponents/ThemeProvider";
+import Navbar from "./mycomponents/Navbar";
 function App() {
   return (
-    <div className="App h-dvh w-full bg-white flex flex-col">
-      <nav className="navbar w-full h-12 border-b flex items-center justify-between px-4">
-        <div className="uppercase font-bold text-accent tracking-wide text-lg">
-          Streamify
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <div className="App min-h-dvh w-full bg-white flex flex-col dark:bg-neutral-950 md:border-r dark:border-neutral-700/70">
+        <Navbar />
+        <div className="w-full h-full flex flex-col flex-1 md:flex-row">
+          <SideBar />
+          <Dashboard />
         </div>
-        <Avatar className="w-8 h-8">
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-      </nav>
-      <div className="w-full flex flex-1">
-        <SideBar />
-        <Dashboard />
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
 
