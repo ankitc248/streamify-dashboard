@@ -4,14 +4,14 @@ import { sideBarLinksData } from "@/DummyData";
 import { useState } from "react";
 import { CustomTooltipContainer } from "../ButtonWithIconAndTooltip";
 export default function SideBar() {
-  const [sideBarOpen, setSideBarOpen] = useState<boolean>(false);
+  const [sideBarOpen, setSideBarOpen] = useState<boolean>(true);
   return (
     <nav
       className={`h-full border-b dark:border-neutral-700/70 p-2 w-full ${
-        sideBarOpen ? "md:w-56" : "md:w-16"
-      } md:border-b-0 overflow-hidden`}
+        sideBarOpen ? "lg:w-56" : "lg:w-16"
+      } lg:border-b-0 overflow-hidden`}
     >
-      <div className="justify-between items-center p-2 pr-0 hidden md:flex">
+      <div className="justify-between items-center p-2 pr-0 hidden lg:flex">
         <h2
           className={`text-lg font-semibold text-neutral-900 dark:text-neutral-100 ${
             !sideBarOpen && "hidden"
@@ -26,7 +26,7 @@ export default function SideBar() {
           >
             <LogOut
               size={16}
-              className="rotate-180 contrast-50 group-hover:contrast-100 group-focus:contrast-100 dark:text-neutral-100"
+              className="rotate-180 dark:text-neutral-100"
             />
           </ButtonWithIconAndTooltip>
         ) : (
@@ -36,13 +36,13 @@ export default function SideBar() {
           >
             <LogOut
               size={16}
-              className="contrast-50 group-hover:contrast-100 group-focus:contrast-100 dark:text-neutral-100"
+              className="dark:text-neutral-100"
             />
           </ButtonWithIconAndTooltip>
         )}
       </div>
       <div
-        className={`flex gap-1 md:flex-col overflow-x-auto md:overflow-hidden md:py-2 ${
+        className={`flex gap-1 lg:flex-col overflow-x-auto lg:overflow-hidden lg:py-2 ${
           !sideBarOpen ? "items-center" : ""
         }`}
       >

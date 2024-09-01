@@ -39,7 +39,7 @@ const TopArtistDetails = () => {
           className="text-xs p-1 px-2 bg-accent/5 justify-between flex border-b last:border-b-0 border-accent/30 dark:text-neutral-300"
         >
           <span className="font-medium">{song.title}</span>
-          <span className="font-base tracking-wide">
+          <span className="font-base tracking-wide font-medium">
             {AbbreviateNumber(song.streams)}
           </span>
         </div>

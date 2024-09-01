@@ -3,20 +3,28 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
 } from "@/components/ui/chart";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import { Pie, PieChart } from "recharts";
 import { chartsData } from "@/DummyData";
-import { TrendingUp, ChartPie, Crown } from "lucide-react";
-import { Bar, BarChart, LabelList, YAxis } from "recharts";
+import { TrendingUp, ChartPie, Trophy } from "lucide-react";
+import { Bar, BarChart, LabelList } from "recharts";
 import { AbbreviateNumber } from "@/helpers/Helpers";
 import { Rectangle } from "recharts";
 export default function DataVisualization() {
   return (
-    <section className="p-4 py-8 border-b dark:border-neutral-700/70">
-      <h3 className="font-medium mb-8 dark:text-neutral-100 text-xl">
+    <section
+      className="p-4 py-8 dark:border-neutral-700/70"
+      id="dataVisualization"
+    >
+      <h3 className="font-semibold dark:text-neutral-100 text-xl">
         Data Visualization
       </h3>
+      <p className="text-neutral-500 dark:text-neutral-300 text-sm mb-4">
+        Interactive charts for your data
+      </p>
       <div className="grid grid-cols-1 lg:grid-cols-2 py-1 gap-5">
         <LineChartComponent />
         <PieChartComponent />
@@ -45,15 +53,15 @@ export function LineChartComponent() {
     <div
       className={`rounded-xl border dark:border-neutral-700/70 p-4 flex flex-col justify-between hover:shadow-sm hover:bg-accent/10 hover:border-accent/50 overflow-hidden relative`}
     >
-      <div className="flex gap-3 items-start">
-        <div className="rounded-full aspect-square flex items-center justify-center mt-1">
+      <div className="flex gap-3 items-start justify-between">
+        <div className="rounded-full aspect-square flex items-center justify-center mt-1 order-2">
           <TrendingUp size={18} color="#FE5829" />
         </div>
         <div className="w-full">
           <h4 className="font-medium dark:text-neutral-100">
             {chartsData[0].title}
           </h4>
-          <p className="text-sm font-medium mb-1 text-pretty dark:text-neutral-100">
+          <p className="text-sm font-medium mb-1 text-neutral-500 dark:text-neutral-300 text-pretty">
             {chartsData[0].data[0].month} {chartsData[0].data[0].year} -{" "}
             {chartsData[0].data[chartsData[0].data.length - 1].month}{" "}
             {chartsData[0].data[chartsData[0].data.length - 1].year}
@@ -77,6 +85,7 @@ export function LineChartComponent() {
               vertical={true}
               horizontal={false}
               strokeDasharray="3 3"
+              className="stroke-neutral-300 dark:stroke-neutral-800"
             />
             <XAxis
               dataKey="period"
@@ -118,26 +127,26 @@ export function PieChartComponent() {
     },
   } satisfies ChartConfig;
   const colorShades = [
-    "#FFB699", // Lighter 4
-    "#CC4621", // Darker 2
-    "#FFA280", // Lighter 3
-    "#993619", // Darker 4
-    "#FF7A4C", // Lighter 1
-    "#E64F25", // Darker 1
-    "#FF8D66", // Lighter 2
-    "#B33E1D", // Darker 3
+    "#FFB699",
+    "#CC4621",
+    "#FFA280",
+    "#993619",
+    "#FF7A4C",
+    "#E64F25",
+    "#FF8D66",
+    "#B33E1D",
   ];
   const chartData = chartsData[1].data.map((entry, index) => ({
     ...entry,
     fill: `${colorShades[index]}`,
+    stroke: `${colorShades[index]}`,
   }));
-  console.log(chartData);
   return (
     <div
       className={`rounded-xl border dark:border-neutral-700/70 p-4 flex flex-col justify-between hover:shadow-sm hover:bg-accent/10 hover:border-accent/50 overflow-hidden relative`}
     >
-      <div className="flex gap-3 items-start">
-        <div className="rounded-full aspect-square flex items-center justify-center mt-1">
+      <div className="flex gap-3 items-start justify-between">
+        <div className="rounded-full aspect-square flex items-center justify-center mt-1 order-2">
           <ChartPie size={18} color="#FE5829" />
         </div>
         <div>
@@ -149,118 +158,37 @@ export function PieChartComponent() {
           </p>
         </div>
       </div>
-      <ChartContainer config={chartConfig} className="h-64 w-full">
+      <ChartContainer
+        config={chartConfig}
+        className="h-64 [&_.recharts-pie-label-text]:red"
+      >
         <PieChart>
           <ChartTooltip
             content={
               <ChartTooltipContent labelClassName="dark:text-neutral-100" />
             }
+            labelClassName="w-[250px] truncate"
+          />
+          <ChartLegend
+            content={<ChartLegendContent nameKey="source" />}
+            className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center text-neutral-950"
           />
           <Pie
             data={chartData}
             dataKey="amount"
-            label={({ value, name }) =>
-              value.toLocaleString("en-US", { maximumFractionDigits: 0 }) +
-              " | " +
-              name
+            label={({ value }) =>
+              value.toLocaleString("en-US", { maximumFractionDigits: 0 })
             }
             nameKey="source"
-            stroke="#33333399"
-            strokeDasharray={4}
+            strokeWidth={1.5}
+            strokeDasharray={0}
             strokeDashoffset={4}
-            fillOpacity={0.8}
+            fillOpacity={0}
+            stroke="#333"
             className="font-semibold"
           />
         </PieChart>
       </ChartContainer>
-    </div>
-  );
-}
-
-export function HorizontalBarChartComponent() {
-  const chartData = chartsData[2].data;
-  const chartConfig = {
-    streams: {
-      label: "Streams",
-      color: "#FE5829",
-    },
-    label: {
-      color: "hsl(var(--background))",
-    },
-  } satisfies ChartConfig;
-  return (
-    <div
-      className={`rounded-xl border dark:border-neutral-700/70 p-4 flex flex-col justify-between hover:shadow-sm hover:bg-accent/10 hover:border-accent/50 overflow-hidden relative`}
-    >
-      <div className="flex gap-3 items-start">
-        <div className="rounded-full aspect-square flex items-center justify-center mt-1">
-          <Crown size={18} color="#FE5829" />
-        </div>
-        <div>
-          <h4 className="font-medium dark:text-neutral-100">
-            {chartsData[2].title}
-          </h4>
-          <p className="text-neutral-500 dark:text-neutral-300 text-xs text-pretty">
-            {chartsData[2].description}
-          </p>
-        </div>
-      </div>
-      <div className="mt-4 p-2">
-        <ChartContainer config={chartConfig} className="h-56">
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            layout="vertical"
-            margin={{
-              right: 16,
-            }}
-          >
-            {/* <CartesianGrid horizontal={false} /> */}
-            <YAxis
-              dataKey="artist"
-              type="category"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-              hide
-            />
-            <XAxis dataKey="streams" type="number" hide />
-            <ChartTooltip
-              cursor={false}
-              content={
-                <ChartTooltipContent
-                  indicator="line"
-                  labelClassName="dark:text-neutral-100"
-                />
-              }
-            />
-            <Bar
-              dataKey="streams"
-              layout="vertical"
-              fill="var(--color-streams)"
-              radius={[0, 10, 10, 0]}
-              barSize={36}
-            >
-              <LabelList
-                dataKey="song"
-                position="insideLeft"
-                offset={8}
-                className="fill-[--color-label]"
-                fontSize={12}
-              />
-              <LabelList
-                dataKey="streams"
-                position="right"
-                offset={8}
-                className="font-medium"
-                fontSize={12}
-                formatter={(value: number) => AbbreviateNumber(value)}
-              />
-            </Bar>
-          </BarChart>
-        </ChartContainer>
-      </div>
     </div>
   );
 }
@@ -273,13 +201,29 @@ export function VerticalBarChartComponent() {
       color: "#FE5829",
     },
   } satisfies ChartConfig;
+
+  type ChartDataEntry = (typeof chartData)[number];
+  const maxValueIndex = chartData.reduce(
+    (
+      maxIndex: number,
+      current: ChartDataEntry,
+      index: number,
+      array: ChartDataEntry[]
+    ) => {
+      const currentStreams = current.streams ?? -Infinity;
+      const maxStreams = array[maxIndex].streams ?? -Infinity;
+      return currentStreams > maxStreams ? index : maxIndex;
+    },
+    0
+  );
+
   return (
     <div
       className={`rounded-xl border dark:border-neutral-700/70 p-4 flex flex-col justify-between hover:shadow-sm hover:bg-accent/10 hover:border-accent/50 overflow-hidden relative`}
     >
-      <div className="flex gap-3 items-start">
-        <div className="rounded-full aspect-square flex items-center justify-center mt-1">
-          <Crown size={18} color="#FE5829" />
+      <div className="flex gap-3 items-start justify-between">
+        <div className="rounded-full aspect-square flex items-center justify-center mt-1 order-2">
+          <Trophy size={18} color="#FE5829" />
         </div>
         <div>
           <h4 className="font-medium dark:text-neutral-100">
@@ -291,9 +235,16 @@ export function VerticalBarChartComponent() {
         </div>
       </div>
       <div className="mt-4 p-2">
-        <ChartContainer config={chartConfig} className="h-[300px] w-full">
+        <ChartContainer
+          config={chartConfig}
+          className="h-[300px] w-full"
+        >
           <BarChart accessibilityLayer data={chartData} barSize={48}>
-            <CartesianGrid vertical={false} strokeDasharray="3 3" />
+            <CartesianGrid
+              vertical={false}
+              strokeDasharray="3 3"
+              className="stroke-neutral-300 dark:stroke-neutral-800"
+            />
             <XAxis
               dataKey="song"
               tickLine={false}
@@ -312,7 +263,7 @@ export function VerticalBarChartComponent() {
               fill="var(--color-streams)"
               radius={[8, 8, 0, 0]}
               strokeWidth={1}
-              activeIndex={2}
+              activeIndex={maxValueIndex}
               fillOpacity={0.5}
               stroke="#FE5829"
               activeBar={({ ...props }) => {
@@ -325,7 +276,7 @@ export function VerticalBarChartComponent() {
                 offset={8}
                 className="font-medium"
                 fontSize={12}
-                formatter={(value: number) => value.toLocaleString()}
+                formatter={(value: number) => AbbreviateNumber(value)}
               />
             </Bar>
           </BarChart>

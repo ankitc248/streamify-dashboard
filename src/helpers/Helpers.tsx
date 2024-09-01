@@ -13,11 +13,11 @@ const PrettyNumber = ({
 }) => {
   let textSize = "text-3xl";
   if (number > 9999999999 && extraBefore === "") textSize = "text-2xl";
-  if (number > 9999999 && extraBefore !== "") textSize = "text-2xl";
-  if (number > 99999999 && precision >= 2) textSize = "text-xl";
+  if (number > 9999999 && extraBefore !== "") textSize = "text-xl";
+  if (number > 99999999 && precision >= 2) textSize = "text-lg";
   return (
     <p
-      className={`${textSize} font-bold text-neutral-800 text-accent/90 drop-shadow-sm text-ellipsis overflow-hidden w-full dark:text-neutral-100`}
+      className={`${textSize} font-bold text-neutral-800 text-accent/90 drop-shadow-sm truncate dark:text-neutral-100`}
     >
       {extraBefore}
       <CountUp

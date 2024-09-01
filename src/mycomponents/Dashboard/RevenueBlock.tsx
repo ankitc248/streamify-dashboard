@@ -22,8 +22,8 @@ const RevenueBlock = ({
   };
   const [currency, setCurrency] = useState("USD");
   return (
-    <div className="flex gap-4 items-center justify-between">
-      <div className="">
+    <div className="flex gap-1 items-center justify-between truncate mt-4">
+      <div className="py-1 pl-1">
         <Select
           defaultValue="USD"
           onValueChange={(value) => {
@@ -46,7 +46,7 @@ const RevenueBlock = ({
           </SelectContent>
         </Select>
       </div>
-      <div className="flex items-baseline gap-1">
+      <div className="flex items-baseline gap-1 truncate">
         <PrettyNumber
           number={amount * currencyRates[currency][0]}
           extraBefore={currencyRates[currency][1]}

@@ -5,9 +5,9 @@ import Navbar from "./mycomponents/Navbar";
 function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-      <div className="App min-h-dvh w-full bg-white flex flex-col dark:bg-neutral-950 md:border-r dark:border-neutral-700/70">
+      <div className="App min-h-dvh w-full bg-white flex flex-col dark:bg-neutral-950 lg:border-r dark:border-neutral-700/70 items-center">
         <Navbar />
-        <div className="w-full h-full flex flex-col flex-1 md:flex-row">
+        <div className="w-full h-full flex flex-col flex-1 lg:flex-row max-w-screen-2xl">
           <SideBar />
           <Dashboard />
         </div>
