@@ -1,7 +1,17 @@
 import KeyMetrics from "./Sections/KeyMetrics";
-import DataVisualization from "./Sections/DataVisualization";
-import TaskPage from "../tasks/page";
-export default function Dashboard() {
+import { Music2 } from "lucide-react";
+import { Suspense, lazy } from "react";
+
+const LazyDataTable = lazy(() => import("./Sections/DataTable"));
+const LazyDataVisualization = lazy(
+  () => import("./Sections/DataVisualization")
+);
+
+export default function Dashboard({
+  setCurrentlyInView,
+}: {
+  setCurrentlyInView: (id: string) => void;
+}) {
   return (
     <div className="flex-1 pb-10 lg:border-l dark:border-neutral-700/70">
       <header className="p-4">
@@ -10,17 +20,34 @@ export default function Dashboard() {
           All the information you need in one place
         </p>
       </header>
-      <KeyMetrics />
-      <DataVisualization />
-      <section className="mt-1 p-4 dark:border-neutral-700/70">
-        <h3 className="font-semibold dark:text-neutral-100 text-xl">
-          Data Table
-        </h3>
-        <p className="text-neutral-500 dark:text-neutral-300 text-sm">
-          Record of recent streams
-        </p>
-        <TaskPage />
-      </section>
+      <KeyMetrics
+        setCurrentlyInView={setCurrentlyInView}
+        sectionID="key-metrics"
+      />
+      <Suspense fallback={<LoaderComponent />}>
+        <LazyDataVisualization
+          setCurrentlyInView={setCurrentlyInView}
+          sectionID="data-visual"
+        />
+      </Suspense>
+      <Suspense fallback={<LoaderComponent />}>
+        <LazyDataTable
+          setCurrentlyInView={setCurrentlyInView}
+          sectionID="data-table"
+        />
+      </Suspense>
     </div>
   );
 }
+
+const LoaderComponent = () => {
+  return (
+    <div className="w-full p-4 flex justify-center items-center h-56">
+      <Music2
+        size={32}
+        color="#FE5829"
+        className="animate-pulse opacity-0"
+      />
+    </div>
+  );
+};

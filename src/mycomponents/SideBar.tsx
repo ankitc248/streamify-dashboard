@@ -1,15 +1,19 @@
-import ButtonWithIconAndTooltip from "../ButtonWithIconAndTooltip";
+import ButtonWithIconAndTooltip from "./ButtonWithIconAndTooltip";
 import { LogOut } from "lucide-react";
 import { sideBarLinksData } from "@/DummyData";
 import { useState } from "react";
-import { CustomTooltipContainer } from "../ButtonWithIconAndTooltip";
-export default function SideBar() {
+import { CustomTooltipContainer } from "./ButtonWithIconAndTooltip";
+export default function SideBar({
+  currentlyInView,
+}: {
+  currentlyInView: string;
+}) {
   const [sideBarOpen, setSideBarOpen] = useState<boolean>(true);
   return (
     <nav
-      className={`h-full border-b dark:border-neutral-700/70 p-2 w-full ${
+      className={`h-full sticky top-0 border-b bg-white/50 z-10 dark:bg-neutral-950/50 backdrop-blur dark:border-neutral-700/70 p-2 w-full ${
         sideBarOpen ? "lg:w-56" : "lg:w-16"
-      } lg:border-b-0 overflow-hidden`}
+      } lg:border-b-0`}
     >
       <div className="justify-between items-center p-2 pr-0 hidden lg:flex">
         <h2
@@ -24,20 +28,14 @@ export default function SideBar() {
             tooltipText="Collapse"
             onClick={() => setSideBarOpen(!sideBarOpen)}
           >
-            <LogOut
-              size={16}
-              className="rotate-180 dark:text-neutral-100"
-            />
+            <LogOut size={16} className="rotate-180 dark:text-neutral-100" />
           </ButtonWithIconAndTooltip>
         ) : (
           <ButtonWithIconAndTooltip
             tooltipText="Expand"
             onClick={() => setSideBarOpen(!sideBarOpen)}
           >
-            <LogOut
-              size={16}
-              className="dark:text-neutral-100"
-            />
+            <LogOut size={16} className="dark:text-neutral-100" />
           </ButtonWithIconAndTooltip>
         )}
       </div>
@@ -50,8 +48,12 @@ export default function SideBar() {
           return (
             <a
               key={index}
-              href={"#" + link.path}
-              className="flex text-sm items-center gap-2 p-2 hover:bg-accent/15 focus-visible:bg-accent/15 rounded-md transition duration-75 dark:text-neutral-100 dark:hover:bg-accent/30"
+              href={"#" + link.id}
+              className={`flex text-sm items-center gap-2 p-2 hover:bg-accent/10 focus-visible:bg-accent/10 rounded-md transition duration-75 dark:text-neutral-100 dark:hover:bg-accent/30 dark:focus-visible:bg-accent/30 ${
+                currentlyInView === link.id
+                  ? "bg-accent/30 dark:bg-accent/50"
+                  : ""
+              }`}
             >
               {sideBarOpen ? (
                 <>

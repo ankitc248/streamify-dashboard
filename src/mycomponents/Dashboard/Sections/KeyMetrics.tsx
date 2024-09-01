@@ -3,11 +3,23 @@ import { ArrowUp } from "lucide-react";
 import { PrettyNumber } from "@/helpers/Helpers";
 import TopArtistDetails from "../TopArtistDetails";
 import RevenueBlock from "../RevenueBlock";
+import SectionContainer from "./SectionContainer";
 
-export default function KeyMetrics() {
+export default function KeyMetrics({
+  setCurrentlyInView,
+  sectionID,
+}: {
+  setCurrentlyInView: (arg0: string) => void;
+  sectionID: string;
+}) {
   return (
-    <section className="mt-1 p-4 dark:border-neutral-700/70">
-      <h3 className="font-semibold mb-2 dark:text-neutral-100 text-xl">Key Metrics</h3>
+    <SectionContainer
+      setCurrentlyInView={setCurrentlyInView}
+      sectionID={sectionID}
+    >
+      <h3 className="font-semibold mb-2 dark:text-neutral-100 text-xl">
+        Key Metrics
+      </h3>
       <div className="flex gap-2 flex-wrap mb-6">
         <div className="flex gap-2 items-center bg-green-500/10 border border-green-500 p-1 px-3 rounded-full text-xs font-medium dark:text-neutral-100">
           <ArrowUp size={16} color="#00BB00" />
@@ -81,6 +93,6 @@ export default function KeyMetrics() {
           </div>
         ))}
       </div>
-    </section>
+    </SectionContainer>
   );
 }

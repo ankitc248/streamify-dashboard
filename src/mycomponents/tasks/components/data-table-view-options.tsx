@@ -3,7 +3,7 @@
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { Settings2 } from "lucide-react";
 import { Table } from "@tanstack/react-table";
-
+import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,6 +12,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { RecentStreamsLink } from "@/DummyData";
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
@@ -20,13 +21,19 @@ interface DataTableViewOptionsProps<TData> {
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
+  type CustomColumnDef<TData> = ColumnDef<TData> & {
+    columnTitle?: string;
+    accessorKey?: string;
+  };
+  const columnDefs =
+    table._getColumnDefs() as CustomColumnDef<RecentStreamsLink>[];
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
           size="sm"
-          className="ml-auto hidden h-8 lg:flex text-xs font-semibold dark:text-neutral-200"
+          className="ml-auto h-8 flex text-xs font-semibold dark:text-neutral-200"
         >
           <Settings2 className="mr-2 h-4 w-4" />
           View
@@ -47,6 +54,10 @@ export function DataTableViewOptions<TData>({
               typeof column.accessorFn !== "undefined" && column.getCanHide()
           )
           .map((column) => {
+            const columnDef = columnDefs.find(
+              (c) => c.accessorKey === column.id
+            );
+            const columnTitle = columnDef?.columnTitle ?? "Title";
             return (
               <DropdownMenuCheckboxItem
                 key={column.id}
@@ -54,7 +65,7 @@ export function DataTableViewOptions<TData>({
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
                 className="text-xs dark:text-neutral-100 focus:bg-neutral-100 dark:focus:bg-neutral-800 capitalize"
               >
-                {column.id}
+                {columnTitle}
               </DropdownMenuCheckboxItem>
             );
           })}

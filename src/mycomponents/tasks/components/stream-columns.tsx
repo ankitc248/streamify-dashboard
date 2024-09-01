@@ -55,9 +55,14 @@ export const streamColumns: CustomColumnDef<RecentStreamsLink>[] = [
       />
     ),
     cell: ({ row }) => {
+      const date = new Date(row.getValue("dateStreamed"));
       return (
         <div className="flex space-x-2">
-          <span className="truncate">{row.getValue("dateStreamed")}</span>
+          <span className="truncate">
+            {String(date.getDate()).padStart(2, "0")}-
+            {date.toLocaleString("en-US", { month: "short" }).toUpperCase()}-
+            {String(date.getFullYear()).slice(-2)}
+          </span>
         </div>
       );
     },

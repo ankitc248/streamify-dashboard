@@ -13,15 +13,15 @@ import {
 
 interface SideBarLink {
   title: string;
-  path: string;
   icon: LucideIcon;
+  id: string;
 }
 
 const sideBarLinksData: SideBarLink[] = [
-  { title: "Key Metrics", path: "/", icon: Box },
-  { title: "Data Visualization", path: "/", icon: ChartArea },
-  { title: "Data Table", path: "/", icon: Table2 },
-  { title: "Bonus", path: "/", icon: DiamondPlus },
+  { title: "Key Metrics", icon: Box, id: "key-metrics" },
+  { title: "Data Visualization", icon: ChartArea, id: "data-visual" },
+  { title: "Data Table", icon: Table2, id: "data-table" },
+  { title: "Bonus", icon: DiamondPlus, id: "bonus" },
 ];
 
 interface KeyMetricsLink {
@@ -367,4 +367,4 @@ const recentStreamsData: RecentStreamsLink[] = [
 ];
 
 export { sideBarLinksData, keyMetricsData, chartsData, recentStreamsData };
-export type { RecentStreamsLink, ChartsLink, SideBarLink }
+export type { RecentStreamsLink, ChartsLink, SideBarLink };
