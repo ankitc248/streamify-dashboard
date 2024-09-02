@@ -4,7 +4,8 @@ import { PrettyNumber } from "@/helpers/Helpers";
 import TopArtistDetails from "../TopArtistDetails";
 import RevenueBlock from "../RevenueBlock";
 import SectionContainer from "./SectionContainer";
-
+import { Skeleton } from "@/components/ui/skeleton";
+import { useState, useEffect } from "react";
 export default function KeyMetrics({
   setCurrentlyInView,
   sectionID,
@@ -12,6 +13,14 @@ export default function KeyMetrics({
   setCurrentlyInView: (arg0: string) => void;
   sectionID: string;
 }) {
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
   return (
     <SectionContainer
       setCurrentlyInView={setCurrentlyInView}
@@ -40,56 +49,78 @@ export default function KeyMetrics({
                 : ""
             }`}
           >
-            <div className="flex gap-3 items-start justify-between">
-              <div className="rounded-full aspect-square flex items-center justify-center mt-1 order-2">
-                <keyMetric.icon
-                  size={18}
-                  color="#FE5829"
-                  className={`${
-                    keyMetric.title === "Total Streams" ? "animate-spin" : ""
-                  }`}
-                />
-              </div>
-              <div>
-                <h4 className="font-medium dark:text-neutral-100">
-                  {keyMetric.title}
-                </h4>
-                <p className="text-neutral-500 dark:text-neutral-300 text-xs text-pretty">
-                  {keyMetric.description}
-                </p>
-              </div>
-            </div>
-
-            {keyMetric.title !== "Top Artist" &&
-              keyMetric.title !== "Revenue" && (
-                <div className="self-end mt-4 flex items-baseline gap-1">
-                  <PrettyNumber number={keyMetric.value} count={index} />
-                  {keyMetric.higherThanPredicted && (
-                    <ArrowUp size={16} color="#00BB00" />
-                  )}
-                  {keyMetric.higherThanPredicted !== undefined &&
-                    !keyMetric.higherThanPredicted && (
-                      <ArrowUp
-                        size={16}
-                        color="#CC0000"
-                        className="rotate-180"
-                      />
-                    )}
+            {loading && (
+              <div className="flex flex-col gap-3">
+                <div className="flex justify-between w-full gap-2">
+                  <div className="flex flex-col gap-2 w-full">
+                    <Skeleton className="h-4 w-24 rounded-full" />
+                    <Skeleton className="h-2 w-10/12 rounded-full" />
+                  </div>
+                  <Skeleton className="h-6 aspect-square rounded-full self-start" />
                 </div>
-              )}
-            {keyMetric.title === "Revenue" && (
-              <RevenueBlock
-                amount={keyMetric.value}
-                arrow={
-                  keyMetric.higherThanPredicted ? (
-                    <ArrowUp size={16} color="#00BB00" />
-                  ) : (
-                    <ArrowUp size={16} color="#CC0000" className="rotate-180" />
-                  )
-                }
-              />
+                <Skeleton className="h-8 w-6/12 rounded-full mt-8 self-end" />
+              </div>
             )}
-            {keyMetric.title === "Top Artist" && <TopArtistDetails />}
+            {!loading && (
+              <>
+                <div className="flex gap-3 items-start justify-between">
+                  <div className="rounded-full aspect-square flex items-center justify-center mt-1 order-2">
+                    <keyMetric.icon
+                      size={18}
+                      color="#FE5829"
+                      className={`${
+                        keyMetric.title === "Total Streams"
+                          ? "animate-spin"
+                          : ""
+                      }`}
+                    />
+                  </div>
+                  <div>
+                    <h4 className="font-medium dark:text-neutral-100">
+                      {keyMetric.title}
+                    </h4>
+                    <p className="text-neutral-500 dark:text-neutral-300 text-xs text-pretty">
+                      {keyMetric.description}
+                    </p>
+                  </div>
+                </div>
+
+                {keyMetric.title !== "Top Artist" &&
+                  keyMetric.title !== "Revenue" && (
+                    <div className="self-end mt-4 flex items-baseline gap-1">
+                      <PrettyNumber number={keyMetric.value} count={index} />
+                      {keyMetric.higherThanPredicted && (
+                        <ArrowUp size={16} color="#00BB00" />
+                      )}
+                      {keyMetric.higherThanPredicted !== undefined &&
+                        !keyMetric.higherThanPredicted && (
+                          <ArrowUp
+                            size={16}
+                            color="#CC0000"
+                            className="rotate-180"
+                          />
+                        )}
+                    </div>
+                  )}
+                {keyMetric.title === "Revenue" && (
+                  <RevenueBlock
+                    amount={keyMetric.value}
+                    arrow={
+                      keyMetric.higherThanPredicted ? (
+                        <ArrowUp size={16} color="#00BB00" />
+                      ) : (
+                        <ArrowUp
+                          size={16}
+                          color="#CC0000"
+                          className="rotate-180"
+                        />
+                      )
+                    }
+                  />
+                )}
+                {keyMetric.title === "Top Artist" && <TopArtistDetails />}
+              </>
+            )}
           </div>
         ))}
       </div>

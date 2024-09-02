@@ -86,7 +86,6 @@ export function LineChartBlock() {
               type="monotone"
               stroke="var(--color-activeUsers)"
               strokeWidth={2}
-              dot={false}
             />
           </LineChart>
         </ChartContainer>

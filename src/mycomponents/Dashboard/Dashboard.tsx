@@ -44,7 +44,7 @@ const LoaderComponent = () => {
   return (
     <div className="w-full p-4 flex justify-center items-center h-56">
       <Music2
-        size={32}
+        size={24}
         color="#FE5829"
         className="animate-pulse opacity-0"
       />

@@ -65,7 +65,7 @@ export function VerticalBarChartBlock() {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              className="font-medium text-ellipsis"
+              className="font-medium text-ellipsis hidden sm:block"
             />
             <ChartTooltip
               cursor={false}
