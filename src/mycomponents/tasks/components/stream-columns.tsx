@@ -47,6 +47,20 @@ export const streamColumns: CustomColumnDef<RecentStreamsLink>[] = [
   },
   {
     accessorKey: "dateStreamed",
+    filterFn: (row, columnId, filterValue) => {
+      const { from, to } = filterValue || {};
+      const rowDate = new Date(row.getValue(columnId));
+      const fromDate = from ? new Date(from) : null;
+      const toDate = to ? new Date(to) : null;
+      if (fromDate && toDate) {
+        return rowDate >= fromDate && rowDate <= toDate;
+      } else if (fromDate) {
+        return rowDate >= fromDate;
+      } else if (toDate) {
+        return rowDate <= toDate;
+      }
+      return true;
+    },
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -66,9 +80,6 @@ export const streamColumns: CustomColumnDef<RecentStreamsLink>[] = [
         </div>
       );
     },
-    enableSorting: true,
-    enableHiding: true,
-    columnTitle: "Date Streamed",
   },
   {
     accessorKey: "streamCount",

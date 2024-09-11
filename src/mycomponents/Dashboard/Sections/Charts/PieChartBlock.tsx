@@ -94,7 +94,7 @@ export function PieChartBlock() {
                   value.toLocaleString("en-US", { maximumFractionDigits: 0 })
                 }
                 nameKey="source"
-                strokeWidth={1.25}
+                strokeWidth={0.5}
                 strokeDasharray={0}
                 fillOpacity={0.5}
                 className="font-semibold"

@@ -6,13 +6,13 @@ import RevenueBlock from "../RevenueBlock";
 import SectionContainer from "./SectionContainer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState, useEffect } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
 import StreamsLiveCount from "../StreamsLiveCount";
 export default function KeyMetrics({
   setCurrentlyInView,
@@ -35,7 +35,7 @@ export default function KeyMetrics({
     >
       <h3 className="flex justify-between font-semibold mb-2 dark:text-neutral-100 text-xl">
         Key Metrics
-        <div className="py-1 pl-1">
+        {/* <div className="py-1 pl-1">
           <Select defaultValue="all">
             <SelectTrigger className="w-auto font-normal text-xs rounded-full p-2 h-6 font-base shadow-sm border-neutral-300 dark:text-neutral-100">
               <SelectValue placeholder="time" defaultValue="all" />
@@ -52,7 +52,7 @@ export default function KeyMetrics({
               </SelectItem>
             </SelectContent>
           </Select>
-        </div>
+        </div> */}
       </h3>
       <div className="flex gap-2 flex-wrap mb-6">
         <div className="flex gap-2 items-center bg-green-500/10 border border-green-500 p-0.5 px-3 rounded-full text-xs font-medium dark:text-neutral-100">
