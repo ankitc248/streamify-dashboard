@@ -1,13 +1,14 @@
-import ButtonWithIconAndTooltip from "./ButtonWithIconAndTooltip";
 import { LogOut } from "lucide-react";
 import { sideBarLinksData } from "@/DummyData";
 import { useState } from "react";
-import { CustomTooltipContainer } from "./ButtonWithIconAndTooltip";
+import ButtonWithIconAndTooltip, {
+  CustomTooltipContainer,
+} from "./ButtonWithIconAndTooltip";
 export default function SideBar({
   currentlyInView,
-}: {
+}: Readonly<{
   currentlyInView: string;
-}) {
+}>) {
   const [sideBarOpen, setSideBarOpen] = useState<boolean>(true);
   return (
     <nav
@@ -44,10 +45,10 @@ export default function SideBar({
           !sideBarOpen ? "items-center" : ""
         }`}
       >
-        {sideBarLinksData.map((link, index) => {
+        {sideBarLinksData.map((link) => {
           return (
             <a
-              key={index}
+              key={link.id}
               href={"#" + link.id}
               className={`flex text-sm items-center gap-2 p-2 hover:bg-accent/10 focus-visible:bg-accent/10 rounded-md transition duration-75 dark:text-neutral-100 dark:hover:bg-accent/30 dark:focus-visible:bg-accent/30 ${
                 currentlyInView === link.id

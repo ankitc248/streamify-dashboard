@@ -5,16 +5,17 @@ const PrettyNumber = ({
   count = 0,
   extraBefore = "",
   precision = 0,
+  startSame = false,
 }: {
   number: number;
   count?: number;
   extraBefore?: string;
   precision?: number;
+  startSame?: boolean;
 }) => {
   let textSize = "text-3xl";
-  if (number > 9999999999 && extraBefore === "") textSize = "text-2xl";
-  if (number > 9999999 && extraBefore !== "") textSize = "text-xl";
-  if (number > 99999999 && precision >= 2) textSize = "text-lg";
+  if (number > 999999999 && extraBefore === "") textSize = "text-2xl";
+  if (number > 99999999 && extraBefore !== "") textSize = "text-xl";
   return (
     <p
       className={`${textSize} font-bold text-neutral-800 text-accent/90 drop-shadow-sm truncate dark:text-neutral-100`}
@@ -25,7 +26,7 @@ const PrettyNumber = ({
         decimals={precision}
         duration={1}
         delay={count * 0}
-        start={number - number / 100}
+        start={!startSame ? (number - number / 100) : number}
       />
     </p>
   );

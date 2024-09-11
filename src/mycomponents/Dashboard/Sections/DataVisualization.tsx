@@ -8,8 +8,8 @@ export default function DataVisualization({
   setCurrentlyInView,
   sectionID,
 }: {
-  setCurrentlyInView: (arg0: string) => void;
-  sectionID: string;
+  readonly setCurrentlyInView: (arg0: string) => void;
+  readonly sectionID: string;
 }) {
   return (
     <SectionContainer
@@ -22,7 +22,7 @@ export default function DataVisualization({
       <p className="text-neutral-500 dark:text-neutral-300 text-sm mb-4">
         Interactive charts for your data
       </p>
-      <div className="grid grid-cols-1 lg:grid-cols-2 py-1 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 3xl:grid-cols-3 py-1 gap-5">
         <LineChartBlock />
         <PieChartBlock />
         <VerticalBarChartBlock />

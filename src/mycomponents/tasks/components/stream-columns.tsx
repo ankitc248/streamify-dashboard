@@ -19,7 +19,9 @@ export const streamColumns: CustomColumnDef<RecentStreamsLink>[] = [
       />
     ),
     cell: ({ row }) => (
-      <div className="w-36 font-medium">{row.getValue("songName")}</div>
+      <div className="text-neutral-700 font-medium dark:text-neutral-100">
+        {row.getValue("songName")}
+      </div>
     ),
     enableSorting: true,
     enableHiding: false,
@@ -37,9 +39,7 @@ export const streamColumns: CustomColumnDef<RecentStreamsLink>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[200px] truncate">
-            {row.getValue("artist")}
-          </span>
+          <span className=" truncate">{row.getValue("artist")}</span>
         </div>
       );
     },
@@ -57,7 +57,7 @@ export const streamColumns: CustomColumnDef<RecentStreamsLink>[] = [
     cell: ({ row }) => {
       const date = new Date(row.getValue("dateStreamed"));
       return (
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 ">
           <span className="truncate">
             {String(date.getDate()).padStart(2, "0")}-
             {date.toLocaleString("en-US", { month: "short" }).toUpperCase()}-
@@ -81,7 +81,7 @@ export const streamColumns: CustomColumnDef<RecentStreamsLink>[] = [
     ),
     cell: ({ row }) => {
       return (
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 ">
           <span className="truncate text-accent/80 font-medium pl-3">
             {row.getValue("streamCount")}
           </span>
@@ -101,7 +101,7 @@ export const streamColumns: CustomColumnDef<RecentStreamsLink>[] = [
     ),
     cell: ({ row }) => {
       return (
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 ">
           <span className="max-w-[100px] truncate">
             {row.getValue("userId")}
           </span>
