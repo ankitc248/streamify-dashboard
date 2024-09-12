@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CalendarIcon, X } from "lucide-react";
+import { CalendarIcon, X, Minus } from "lucide-react";
 import { format, subMonths } from "date-fns";
 import { DateRange } from "react-day-picker";
 
@@ -24,61 +24,101 @@ export function CalendarDateRangePicker({
   dateBetweenFilterFn,
   resetFilters,
 }: CalendarDateRangePickerProps) {
-  const [date, setDate] = React.useState<DateRange | undefined>(undefined);
+  const [fromDate, setFromDate] = React.useState<Date | undefined>(undefined);
+  const [toDate, setToDate] = React.useState<Date | undefined>(undefined);
+  const [isFromCalendarOpen, setIsFromCalendarOpen] =
+    React.useState<boolean>(false);
+  const [isToCalendarOpen, setIsToCalendarOpen] =
+    React.useState<boolean>(false);
 
-  const handleDateChangeFn = (dateRange: DateRange | undefined) => {
-    setDate(dateRange);
+  const handleDateChangeFn = (from: Date | undefined, to: Date | undefined) => {
+    const dateRange = { from: from, to: to };
     dateBetweenFilterFn(dateRange);
+    setIsFromCalendarOpen(false);
+    setIsToCalendarOpen(false);
   };
 
   return (
     <div className="flex items-center border rounded-md h-8 dark:border-neutral-800 dark:text-neutral-200 overflow-hidden">
+      <CalendarIcon size={14} className="mx-2" />
       <div className={cn("grid gap-2 text-xs", className)}>
-        <Popover>
+        <Popover open={isFromCalendarOpen} onOpenChange={setIsFromCalendarOpen}>
           <PopoverTrigger asChild>
             <Button
               id="date"
               variant={"ghost"}
               className={cn(
-                "w-[260px] justify-start text-left text-xs h-8 font-normal rounded-none",
-                !date && "text-muted-foreground"
+                "w-auto min-w-16 justify-start text-left text-xs h-8 font-normal rounded-none p-2",
+                !fromDate && "text-muted-foreground"
               )}
             >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {date?.from ? (
-                date.to ? (
-                  <>
-                    {format(date.from, "LLL dd, y")} -{" "}
-                    {format(date.to, "LLL dd, y")}
-                  </>
-                ) : (
-                  format(date.from, "LLL dd, y")
-                )
+              {fromDate ? (
+                <>{format(fromDate, "LLL dd, y")}</>
               ) : (
-                <span>Pick a date</span>
+                <span>From</span>
               )}
             </Button>
           </PopoverTrigger>
           <PopoverContent
             className="w-auto p-0 bg-white dark:bg-neutral-950 dark:border-neutral-700 text-xs"
-            align="end"
+            align="start"
+          >
+            <Calendar
+              mode="single"
+              captionLayout="dropdown-buttons"
+              fromYear={1997}
+              toYear={toDate ? toDate.getFullYear() : 2025}
+              defaultMonth={subMonths(new Date(), 1)}
+              selected={fromDate}
+              onSelect={(from) => {
+                setFromDate(from);
+                handleDateChangeFn(from, toDate);
+              }}
+              numberOfMonths={1}
+              className="dark:bg-neutral-950 dark:text-neutral-300 dark:border-neutral-800"
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
+      <Minus size={10} />
+      <div className={cn("grid gap-2 text-xs", className)}>
+        <Popover open={isToCalendarOpen} onOpenChange={setIsToCalendarOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              id="date"
+              variant={"ghost"}
+              className={cn(
+                "w-auto min-w-16 justify-start text-left text-xs h-8 font-normal rounded-none p-2",
+                !toDate && "text-muted-foreground"
+              )}
+            >
+              {toDate ? <>{format(toDate, "LLL dd, y")}</> : <span>To</span>}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            className="w-auto p-0 bg-white dark:bg-neutral-950 dark:border-neutral-700 text-xs"
+            align="start"
           >
             <Calendar
               initialFocus
-              mode="range"
+              mode="single"
+              captionLayout="dropdown-buttons"
+              toYear={2025}
+              fromDate={fromDate}
               defaultMonth={subMonths(new Date(), 1)}
-              selected={date}
-              onSelect={(data) => {
-                console.log(data);
-                handleDateChangeFn(data);
+              selected={toDate}
+              onSelect={(to) => {
+                setToDate(to);
+                handleDateChangeFn(fromDate, to);
               }}
-              numberOfMonths={2}
+              numberOfMonths={1}
+              className="dark:bg-neutral-950 dark:text-neutral-300 dark:border-neutral-800"
             />
           </PopoverContent>
         </Popover>
       </div>
       <Button
-        className="rounded-none h-full"
+        className="rounded-none h-full p-2 border-l dark:border-neutral-800"
         variant={"ghost"}
         onClick={() => {
           setCalendarFilter(false);

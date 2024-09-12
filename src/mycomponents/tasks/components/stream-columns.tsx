@@ -52,12 +52,29 @@ export const streamColumns: CustomColumnDef<RecentStreamsLink>[] = [
       const rowDate = new Date(row.getValue(columnId));
       const fromDate = from ? new Date(from) : null;
       const toDate = to ? new Date(to) : null;
-      if (fromDate && toDate) {
-        return rowDate >= fromDate && rowDate <= toDate;
-      } else if (fromDate) {
-        return rowDate >= fromDate;
-      } else if (toDate) {
-        return rowDate <= toDate;
+
+      // Normalize the dates to ensure time does not affect the comparison
+      const normalizeDate = (date: Date | undefined | null) => {
+        if (!date) return null;
+        return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      };
+
+      const normalizedRowDate = normalizeDate(rowDate);
+      const normalizedFromDate = normalizeDate(fromDate);
+      const normalizedToDate = normalizeDate(toDate);
+
+      if (normalizedRowDate !== null) {
+        if (normalizedFromDate && normalizedToDate) {
+          // Handle the case where from and to are the same date
+          return (
+            normalizedRowDate >= normalizedFromDate &&
+            normalizedRowDate <= normalizedToDate
+          );
+        } else if (normalizedFromDate) {
+          return normalizedRowDate >= normalizedFromDate;
+        } else if (normalizedToDate) {
+          return normalizedRowDate <= normalizedToDate;
+        }
       }
       return true;
     },

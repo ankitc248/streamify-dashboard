@@ -12,17 +12,21 @@ export default function StreamsLiveCount({
   useEffect(() => {
     liveCountInterval.current = setInterval(async () => {
       const makeNewCountRequest = async () => {
-        try {
-          const response = await fetch("https://mock.com/get_live_count", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ live_count: liveCount }),
-          });
-          const responseBody = await response.json();
-          return responseBody.live_count;
-        } catch {
+        if (process.env.NODE_ENV === "development") {
+          try {
+            const response = await fetch("https://mock.com/get_live_count", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ live_count: liveCount }),
+            });
+            const responseBody = await response.json();
+            return responseBody.live_count;
+          } catch (err) {
+            console.log(err);
+          }
+        } else {
           const new_count = liveCount + Math.floor(Math.random() * 1000);
           return new_count;
         }

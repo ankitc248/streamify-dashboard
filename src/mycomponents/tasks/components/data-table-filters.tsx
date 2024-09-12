@@ -1,4 +1,4 @@
-import { Calendar, FilterIcon, Hash, Check } from "lucide-react";
+import { Calendar, ListFilter, Hash, Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,16 +11,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function DataTableFilters({ setCalendarFilter, calendarFilter }: any) {
+export function DataTableFilters({
+  setCalendarFilter,
+  calendarFilter,
+}: {
+  readonly setCalendarFilter: React.Dispatch<React.SetStateAction<boolean>>;
+  readonly calendarFilter: boolean;
+}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="text-xs h-8 dark:text-neutral-200">
           Filters
-          <FilterIcon size={16} className="ml-2" />
+          <ListFilter size={16} className="ml-2" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-white dark:bg-neutral-950 dark:border-neutral-700 text-xs">
+      <DropdownMenuContent
+        className="w-56 bg-white dark:bg-neutral-950 dark:border-neutral-800 text-xs"
+        align="start"
+      >
         <DropdownMenuLabel className="text-xs dark:text-neutral-300">
           Select filters
         </DropdownMenuLabel>

@@ -53,7 +53,7 @@ export function DataTableToolbar<TData>({
         </div>
         <DataTableViewOptions table={table} />
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap">
         <DataTableFilters
           setCalendarFilter={setCalendarFilter}
           calendarFilter={calendarFilter}
