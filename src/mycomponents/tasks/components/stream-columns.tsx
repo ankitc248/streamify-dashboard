@@ -52,8 +52,6 @@ export const streamColumns: CustomColumnDef<RecentStreamsLink>[] = [
       const rowDate = new Date(row.getValue(columnId));
       const fromDate = from ? new Date(from) : null;
       const toDate = to ? new Date(to) : null;
-
-      // Normalize the dates to ensure time does not affect the comparison
       const normalizeDate = (date: Date | undefined | null) => {
         if (!date) return null;
         return new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -65,7 +63,6 @@ export const streamColumns: CustomColumnDef<RecentStreamsLink>[] = [
 
       if (normalizedRowDate !== null) {
         if (normalizedFromDate && normalizedToDate) {
-          // Handle the case where from and to are the same date
           return (
             normalizedRowDate >= normalizedFromDate &&
             normalizedRowDate <= normalizedToDate
@@ -100,6 +97,27 @@ export const streamColumns: CustomColumnDef<RecentStreamsLink>[] = [
   },
   {
     accessorKey: "streamCount",
+    filterFn: (row, columnId, filterValue) => {
+      const { from, to } = filterValue || {};
+      const rowValue = row.getValue(columnId);
+      const fromValue = from ? Number(from) : null;
+      const toValue = to ? Number(to) : null;
+
+      if (
+        rowValue !== null &&
+        rowValue !== undefined &&
+        typeof rowValue === "number"
+      ) {
+        if (fromValue !== null && toValue !== null) {
+          return rowValue >= fromValue && rowValue <= toValue;
+        } else if (fromValue !== null) {
+          return rowValue >= fromValue;
+        } else if (toValue !== null) {
+          return rowValue <= toValue;
+        }
+      }
+      return true;
+    },
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}

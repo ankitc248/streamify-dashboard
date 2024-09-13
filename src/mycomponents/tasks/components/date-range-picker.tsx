@@ -39,7 +39,7 @@ export function CalendarDateRangePicker({
   };
 
   return (
-    <div className="flex items-center border rounded-md h-8 dark:border-neutral-800 dark:text-neutral-200 overflow-hidden">
+    <div className="flex items-center border shadow-sm border-dashed border-neutral-400 rounded-md h-8 dark:border-neutral-800 dark:text-neutral-200 overflow-hidden">
       <CalendarIcon size={14} className="mx-2" />
       <div className={cn("grid gap-2 text-xs", className)}>
         <Popover open={isFromCalendarOpen} onOpenChange={setIsFromCalendarOpen}>
@@ -48,7 +48,7 @@ export function CalendarDateRangePicker({
               id="date"
               variant={"ghost"}
               className={cn(
-                "w-auto min-w-16 justify-start text-left text-xs h-8 font-normal rounded-none p-2",
+                "w-auto min-w-16 justify-center text-xs h-8 font-normal rounded-none p-2 text-center",
                 !fromDate && "text-muted-foreground"
               )}
             >
@@ -88,7 +88,7 @@ export function CalendarDateRangePicker({
               id="date"
               variant={"ghost"}
               className={cn(
-                "w-auto min-w-16 justify-start text-left text-xs h-8 font-normal rounded-none p-2",
+                "w-auto min-w-16 text-center justify-center text-xs h-8 font-normal rounded-none p-2",
                 !toDate && "text-muted-foreground"
               )}
             >
@@ -118,7 +118,7 @@ export function CalendarDateRangePicker({
         </Popover>
       </div>
       <Button
-        className="rounded-none h-full p-2 border-l dark:border-neutral-800"
+        className="rounded-none h-full p-2 border-l dark:border-neutral-800 border-dashed border-neutral-400"
         variant={"ghost"}
         onClick={() => {
           setCalendarFilter(false);

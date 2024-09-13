@@ -5,6 +5,13 @@
 .dark body {
         background-color: rgb(10, 10, 10);
 }
-.recharts-pie-label-text{
+
+.recharts-pie-label-text {
         fill-opacity: 1;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
 }

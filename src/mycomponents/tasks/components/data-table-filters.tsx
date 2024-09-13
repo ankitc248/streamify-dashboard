@@ -14,16 +14,20 @@ import {
 export function DataTableFilters({
   setCalendarFilter,
   calendarFilter,
+  setCountFilter,
+  countFilter,
 }: {
   readonly setCalendarFilter: React.Dispatch<React.SetStateAction<boolean>>;
   readonly calendarFilter: boolean;
+  readonly setCountFilter: React.Dispatch<React.SetStateAction<boolean>>;
+  readonly countFilter: boolean;
 }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="text-xs h-8 dark:text-neutral-200">
+          <ListFilter size={16} className="mr-2" />
           Filters
-          <ListFilter size={16} className="ml-2" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -31,7 +35,7 @@ export function DataTableFilters({
         align="start"
       >
         <DropdownMenuLabel className="text-xs dark:text-neutral-300">
-          Select filters
+          Choose filters
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-neutral-200 dark:bg-neutral-800" />
         <DropdownMenuGroup>
@@ -44,9 +48,14 @@ export function DataTableFilters({
               Date Streamed {calendarFilter && <Check size={14} />}
             </span>
           </DropdownMenuItem>
-          <DropdownMenuItem className="text-xs dark:text-neutral-100 focus:bg-neutral-100 dark:focus:bg-neutral-800 capitalize">
+          <DropdownMenuItem
+            className="text-xs dark:text-neutral-100 focus:bg-neutral-100 dark:focus:bg-neutral-800 capitalize"
+            onClick={() => setCountFilter(!countFilter)}
+          >
             <Hash className="mr-2 h-4 w-4" />
-            <span>Streams</span>
+            <span className="flex gap-2 justify-between items-center w-full">
+              Streams Count {countFilter && <Check size={14} />}
+            </span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
